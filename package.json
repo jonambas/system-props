@@ -3,11 +3,15 @@
   "version": "0.0.1",
   "description": "",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "rimraf dist && node scripts/esbuild.js && tsc",
     "test": "jest --watchAll",
     "coverage": "jest --coverage && open coverage/lcov-report/index.html"
   },
+  "files": [
+    "dist"
+  ],
   "author": "Jon Ambas",
   "license": "MIT",
   "devDependencies": {
