@@ -9,5 +9,6 @@ buildSync({
   sourcemap: 'linked',
   platform: 'browser',
   format: 'cjs',
+  target: 'es2020',
   outfile: pkg.main
 });
