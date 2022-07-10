@@ -1,40 +1,41 @@
-// import type * as CSS from 'csstype';
 import { system } from '../system';
+
+const scale = 'space';
 
 export const padding = system(
   {
     prop: ['padding', 'p'],
     property: 'padding',
-    scale: 'space'
+    scale
   },
   {
     prop: ['paddingX', 'px'],
     property: ['paddingLeft', 'paddingRight'],
-    scale: 'space'
+    scale
   },
   {
     prop: ['paddingY', 'py'],
     property: ['paddingTop', 'paddingBottom'],
-    scale: 'space'
+    scale
   },
   {
     prop: ['paddingLeft', 'pl'],
     property: 'paddingLeft',
-    scale: 'space'
+    scale
   },
   {
     prop: ['paddingRight', 'pr'],
     property: 'paddingRight',
-    scale: 'space'
+    scale
   },
   {
     prop: ['paddingTop', 'pt'],
     property: 'paddingTop',
-    scale: 'space'
+    scale
   },
   {
     prop: ['paddingBottom', 'pb'],
     property: 'paddingBottom',
-    scale: 'space'
+    scale
   }
 );

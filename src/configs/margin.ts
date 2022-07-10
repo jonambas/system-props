@@ -1,40 +1,41 @@
-// import type * as CSS from 'csstype';
 import { system } from '../system';
+
+const scale = 'space';
 
 export const margin = system(
   {
     prop: ['margin', 'm'],
     property: 'margin',
-    scale: 'space'
+    scale
   },
   {
     prop: ['marginX', 'mx'],
     property: ['marginLeft', 'marginRight'],
-    scale: 'space'
+    scale
   },
   {
     prop: ['marginY', 'my'],
     property: ['marginTop', 'marginBottom'],
-    scale: 'space'
+    scale
   },
   {
     prop: ['marginLeft', 'ml'],
     property: 'marginLeft',
-    scale: 'space'
+    scale
   },
   {
     prop: ['marginRight', 'mr'],
     property: 'marginRight',
-    scale: 'space'
+    scale
   },
   {
     prop: ['marginTop', 'mt'],
     property: 'marginTop',
-    scale: 'space'
+    scale
   },
   {
     prop: ['marginBottom', 'mb'],
     property: 'marginBottom',
-    scale: 'space'
+    scale
   }
 );
