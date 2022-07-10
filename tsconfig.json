@@ -1,0 +1,18 @@
+{
+  "include": ["src/index.ts"],
+  "exclude": ["dist", "node_modules", "tests"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "target": "ES6",
+    "module": "ES2022",
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "moduleResolution": "node",
+    "strict": true,
+    "emitDeclarationOnly": true,
+    "declaration": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true
+  }
+}
