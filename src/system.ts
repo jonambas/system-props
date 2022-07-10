@@ -1,4 +1,3 @@
-import type * as CSS from 'csstype';
 import {
   getConfig,
   getPropNames,
@@ -6,39 +5,84 @@ import {
   mediaQuery,
   sort
 } from './utils';
-import type { ExpandedConfig, Parser, SystemConfig } from './types';
+import type {
+  ExpandedConfig,
+  Parser,
+  PropValue,
+  SystemConfig
+} from './types';
 
 /**
  * Gets a value from a provided theme scale
  * Also handles negative values
  */
-const get = (value: string, scale?: Record<string, any>) => {
+const get = (
+  value: PropValue,
+  scale?: Record<string, any>
+): PropValue => {
+  if (
+    ['undefined', 'boolean'].includes(typeof value) ||
+    value === null
+  ) {
+    return;
+  }
+
+  if (typeof value === 'number') {
+    return scale && scale[value] ? scale[value] : `${value * 100}%`;
+  }
+
   if (!scale) {
     return value;
   }
 
-  const negative = Boolean(value.match(/^-/));
-  const parts = negative
-    ? value.replace(/^-/, '').split('.')
-    : value.split('.');
+  if (typeof value === 'string') {
+    const negative = Boolean(value.match(/^-/));
+    const parts = negative
+      ? value.replace(/^-/, '').split('.')
+      : value.split('.');
 
-  const result = parts.reduce((o, key) => {
-    if (!o || !o[key]) {
-      return undefined;
+    const result = parts.reduce((o, key) => {
+      if (!o || !o[key]) {
+        return undefined;
+      }
+      return o[key];
+    }, scale);
+
+    return negative && typeof result === 'string'
+      ? `-${result}`
+      : typeof result === 'string' // prevents objects from being returned
+      ? result
+      : value;
+  }
+};
+
+const makeRules = (
+  property: ExpandedConfig['property'],
+  value: PropValue,
+  scale?: Record<string, any>
+) => {
+  const propValue = get(value, scale);
+
+  if (Array.isArray(property)) {
+    let rules = {};
+
+    for (const key of property) {
+      rules = {
+        ...rules,
+        [key]: propValue
+      };
     }
-    return o[key];
-  }, scale);
 
-  return negative && typeof result === 'string'
-    ? `-${result}`
-    : // prevents objects from being returned
-    typeof result === 'string'
-    ? result
-    : value;
+    return rules;
+  }
+
+  return {
+    [property]: propValue
+  };
 };
 
 const parseResponsiveObject = (
-  property: keyof CSS.StandardProperties,
+  property: ExpandedConfig['property'],
   value: Record<string, any>,
   breakpoints?: Record<string, any>,
   scale?: Record<string, any>
@@ -53,7 +97,7 @@ const parseResponsiveObject = (
     if (key === '_') {
       styles = {
         ...styles,
-        [property]: get(value[key], scale)
+        ...makeRules(property, value[key], scale)
       };
       continue;
     }
@@ -62,9 +106,11 @@ const parseResponsiveObject = (
     if (breakpoints[key]) {
       styles = {
         ...styles,
-        [mediaQuery(breakpoints[key])]: {
-          [property]: get(value[key], scale)
-        }
+        [mediaQuery(breakpoints[key])]: makeRules(
+          property,
+          value[key],
+          scale
+        )
       };
       continue;
     }
@@ -107,7 +153,7 @@ export const makeParser = (configs: ExpandedConfig[]): Parser => {
 
       styles = {
         ...styles,
-        [config.property]: get(props[prop], scale)
+        ...makeRules(config.property, props[prop], scale)
       };
     }
 

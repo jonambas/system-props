@@ -5,7 +5,8 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "rimraf dist && node scripts/esbuild.js && tsc",
-    "test": "jest --watchAll"
+    "test": "jest --watchAll",
+    "coverage": "jest --coverage && open coverage/lcov-report/index.html"
   },
   "author": "Jon Ambas",
   "license": "MIT",

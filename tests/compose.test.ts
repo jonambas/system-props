@@ -1,5 +1,4 @@
-import { system } from '../src/index';
-import { compose } from '../src/compose';
+import { system, compose } from '../src';
 
 describe('compose', () => {
   it('composes configs', () => {

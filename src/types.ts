@@ -1,8 +1,12 @@
 import type * as CSS from 'csstype';
 
+export type PropValue = string | number | boolean | null | undefined;
+
 export type ExpandedConfig = {
   prop: string | string[];
-  property: keyof CSS.StandardProperties;
+  property:
+    | keyof CSS.StandardProperties
+    | Array<keyof CSS.StandardProperties>;
   scale?: string;
 };
 
