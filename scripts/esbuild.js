@@ -3,23 +3,41 @@ const { build } = require('esbuild');
 const pkg = require('../package.json');
 const fs = require('fs');
 
-build({
+const stats = (file) => {
+  const stats = fs.statSync(file);
+  const size = (stats.size / 1024).toFixed(2);
+  if (size > 8) {
+    console.error(`${file} – too big: ${size} kb. (8 kb max)`);
+    process.exit(1);
+  }
+  console.info(`${file} – ${size} kb`);
+};
+
+const options = {
   entryPoints: ['src/index.ts'],
   bundle: true,
   minify: true,
   sourcemap: 'linked',
   platform: 'browser',
+  target: 'es2020'
+};
+
+build({
+  ...options,
   format: 'cjs',
-  target: 'es2020',
   outfile: pkg.main
 })
   .then(() => {
-    const stats = fs.statSync(pkg.main);
-    const size = (stats.size / 1024).toFixed(2);
-    if (size > 8) {
-      console.error(`Bundle size too big: ${size} kb. (8 kb max)`);
-      process.exit(1);
-    }
-    console.info(`Bundle size: ${size} kb`);
+    stats(pkg.main);
+  })
+  .catch(() => process.exit(1));
+
+build({
+  ...options,
+  format: 'esm',
+  outfile: pkg.module
+})
+  .then(() => {
+    stats(pkg.module);
   })
   .catch(() => process.exit(1));
