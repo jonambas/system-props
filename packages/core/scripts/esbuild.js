@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 const { build } = require('esbuild');
-const pkg = require('../package.json');
+const pkg = require('../../../package.json');
 const fs = require('fs');
 
 const stats = (file) => {

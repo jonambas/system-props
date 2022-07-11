@@ -1,11 +1,11 @@
 {
-  "include": ["src/index.ts"],
-  "exclude": ["dist", "node_modules", "tests"],
+  "include": ["packages/core"],
+  "exclude": ["dist", "node_modules", "packages/core/tests"],
   "compilerOptions": {
     "baseUrl": ".",
     "target": "ES6",
     "module": "ES2022",
-    "rootDir": "./src",
+    "rootDir": "packages/core/src",
     "outDir": "./dist",
     "moduleResolution": "node",
     "strict": true,
