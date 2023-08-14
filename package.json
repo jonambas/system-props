@@ -12,7 +12,7 @@
   "license": "MIT",
   "devDependencies": {
     "@types/jest": "28.1.4",
-    "esbuild": "0.14.49",
+    "esbuild": "0.19.2",
     "esbuild-plugin-limit-size": "0.0.3",
     "jest": "28.1.2",
     "ts-jest": "28.0.5",
